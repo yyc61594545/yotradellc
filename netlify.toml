@@ -1,0 +1,19 @@
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+[build.environment]
+  NEXT_PUBLIC_LANGUAGE = "zh-CN"
+  ENABLE_EXPERIMENTAL_COREPACK = "1"
+  STRIPE_CURRENCY = "usd"
+  NODE_VERSION = "20.11.1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin" 
