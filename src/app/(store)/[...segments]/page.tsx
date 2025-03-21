@@ -36,8 +36,13 @@ export function generateStaticParams() {
 	}));
 }
 
-export default async function Page(props: { params: { segments?: string[] } }) {
-	const params = props.params;
+interface PageProps {
+	params: {
+		segments: string[];
+	};
+}
+
+export default async function Page({ params }: PageProps) {
 	if (!params.segments) {
 		return notFound();
 	}
