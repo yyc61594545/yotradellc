@@ -8,6 +8,8 @@
   STRIPE_CURRENCY = "usd"
   NODE_VERSION = "20.11.1"
   NPM_FLAGS = "--version"
+  NEXT_PUBLIC_URL = "https://yotradellc.netlify.app"
+  NEXT_PUBLIC_VERCEL_URL = "https://yotradellc.netlify.app"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
