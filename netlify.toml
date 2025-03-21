@@ -1,6 +1,6 @@
 [build]
   command = "corepack enable && pnpm install && pnpm build"
-  publish = "out"
+  publish = ".next"
 
 [build.environment]
   NEXT_PUBLIC_LANGUAGE = "zh-CN"
@@ -21,7 +21,8 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200 
+# 删除自定义重定向，让 Next.js 处理路由
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200 

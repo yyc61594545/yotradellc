@@ -8,10 +8,8 @@ const nextConfig: NextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
-	output: "export",
 	distDir: ".next",
 	images: {
-		unoptimized: true,
 		remotePatterns: [
 			{ hostname: "files.stripe.com" },
 			{ hostname: "d1wqzb5bdbcre6.cloudfront.net" },
