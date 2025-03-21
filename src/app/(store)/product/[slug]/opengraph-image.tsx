@@ -1,10 +1,17 @@
 import { getLocale } from "@/i18n/server";
 import { formatMoney } from "@/lib/utils";
-import { accountGet, productGet } from "commerce-kit";
+import { accountGet, productGet, productBrowse } from "commerce-kit";
 import { ImageResponse } from "next/og";
 
 export const dynamic = "force-static";
 export const revalidate = false;
+
+export async function generateStaticParams() {
+	const products = await productBrowse({ first: 100 });
+	return products.map((product) => ({
+		slug: product.metadata.slug,
+	}));
+}
 
 export const size = {
 	width: 1200,
@@ -14,8 +21,7 @@ export const size = {
 export const contentType = "image/png";
 export const alt = "";
 
-export default async function Image(props: { params: Promise<{ slug: string }> }) {
-	const params = await props.params;
+export default async function Image(props: { params: { slug: string } }) {
 	const locale = await getLocale();
 	const geistRegular = fetch(new URL("./Geist-Regular.ttf", import.meta.url)).then((res) =>
 		res.arrayBuffer(),
@@ -23,10 +29,31 @@ export default async function Image(props: { params: Promise<{ slug: string }> }
 	// const geistBold = fetch(new URL("./Geist-Bold.ttf", import.meta.url)).then((res) =>
 	// 	res.arrayBuffer(),
 	// );
-	const [accountResult, [product]] = await Promise.all([accountGet(), productGet({ slug: params.slug })]);
+	const [accountResult, [product]] = await Promise.all([
+		accountGet(),
+		productGet({ slug: props.params.slug }),
+	]);
 
 	if (!product) {
-		return null;
+		return new ImageResponse(
+			(
+				<div
+					style={{
+						width: '100%',
+						height: '100%',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						backgroundColor: '#fff',
+					}}
+				>
+					<div style={{ fontSize: 48, fontWeight: 600, color: '#000' }}>
+						Product Not Found
+					</div>
+				</div>
+			),
+			size
+		);
 	}
 
 	return new ImageResponse(
