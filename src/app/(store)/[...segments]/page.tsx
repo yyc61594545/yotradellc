@@ -2,6 +2,9 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import Link, { type LinkProps } from "next/link";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-static";
+export const revalidate = false;
+
 const pages: Record<string, { content: string }> = {
 	"/about": {
 		content: `
@@ -27,8 +30,14 @@ This is the About page.
 	},
 };
 
-export default async function Page(props: { params: Promise<{ segments?: string[] }> }) {
-	const params = await props.params;
+export function generateStaticParams() {
+	return Object.keys(pages).map((path) => ({
+		segments: path.split("/").filter(Boolean),
+	}));
+}
+
+export default async function Page(props: { params: { segments?: string[] } }) {
+	const params = props.params;
 	if (!params.segments) {
 		return notFound();
 	}
