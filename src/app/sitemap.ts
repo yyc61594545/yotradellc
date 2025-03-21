@@ -3,6 +3,9 @@ import StoreConfig from "@/store.config";
 import * as Commerce from "commerce-kit";
 import type { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+export const revalidate = false;
+
 type Item = MetadataRoute.Sitemap[number];
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const products = await Commerce.productBrowse({ first: 100 });
