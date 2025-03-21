@@ -25,6 +25,16 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { Suspense } from "react";
 
+export const dynamic = "force-static";
+export const revalidate = false;
+
+export async function generateStaticParams() {
+	const products = await Commerce.productBrowse({ first: 100 });
+	return products.map((product) => ({
+		slug: product.metadata.slug,
+	}));
+}
+
 export const generateMetadata = async (props: {
 	params: Promise<{ slug: string }>;
 	searchParams: Promise<{ variant?: string }>;
