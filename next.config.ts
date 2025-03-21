@@ -8,13 +8,10 @@ const nextConfig: NextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
-	output: process.env.DOCKER ? "standalone" : undefined,
-	logging: {
-		fetches: {
-			fullUrl: true,
-		},
-	},
+	output: "export",
+	distDir: ".next",
 	images: {
+		unoptimized: true,
 		remotePatterns: [
 			{ hostname: "files.stripe.com" },
 			{ hostname: "d1wqzb5bdbcre6.cloudfront.net" },
@@ -26,7 +23,7 @@ const nextConfig: NextConfig = {
 	experimental: {
 		esmExternals: true,
 		scrollRestoration: true,
-		ppr: true,
+		ppr: false,
 		cpus: 1,
 		reactCompiler: true,
 		mdxRs: true,
