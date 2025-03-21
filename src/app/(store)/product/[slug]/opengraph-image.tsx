@@ -23,12 +23,6 @@ export const alt = "";
 
 export default async function Image(props: { params: { slug: string } }) {
 	const locale = await getLocale();
-	const geistRegular = fetch(new URL("./Geist-Regular.ttf", import.meta.url)).then((res) =>
-		res.arrayBuffer(),
-	);
-	// const geistBold = fetch(new URL("./Geist-Bold.ttf", import.meta.url)).then((res) =>
-	// 	res.arrayBuffer(),
-	// );
 	const [accountResult, [product]] = await Promise.all([
 		accountGet(),
 		productGet({ slug: props.params.slug }),
@@ -58,7 +52,7 @@ export default async function Image(props: { params: { slug: string } }) {
 
 	return new ImageResponse(
 		<div
-			style={{ fontFamily: "Geist" }}
+			style={{ fontFamily: "sans-serif" }}
 			tw="bg-neutral-100 w-full h-full flex flex-row items-stretch justify-center"
 		>
 			<div tw="flex-1 flex justify-center items-center">
@@ -92,21 +86,6 @@ export default async function Image(props: { params: { slug: string } }) {
 		</div>,
 		{
 			...size,
-			// debug: true,
-			fonts: [
-				{
-					name: "Geist",
-					data: await geistRegular,
-					style: "normal",
-					weight: 400,
-				},
-				// {
-				// 	name: "Geist",
-				// 	data: await geistBold,
-				// 	style: "normal",
-				// 	weight: 700,
-				// },
-			],
 		},
 	);
 }
