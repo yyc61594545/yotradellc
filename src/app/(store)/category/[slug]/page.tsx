@@ -5,6 +5,16 @@ import { ProductList } from "@/ui/products/product-list";
 import * as Commerce from "commerce-kit";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
+import StoreConfig from "@/store.config";
+
+export const dynamic = "force-static";
+export const revalidate = false;
+
+export function generateStaticParams() {
+	return StoreConfig.categories.map((category) => ({
+		slug: category.slug,
+	}));
+}
 
 export const generateMetadata = async (props: {
 	params: Promise<{ slug: string }>;
