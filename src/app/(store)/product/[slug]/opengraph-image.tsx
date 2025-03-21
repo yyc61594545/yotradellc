@@ -3,6 +3,9 @@ import { formatMoney } from "@/lib/utils";
 import { accountGet, productGet } from "commerce-kit";
 import { ImageResponse } from "next/og";
 
+export const dynamic = "force-static";
+export const revalidate = false;
+
 export const size = {
 	width: 1200,
 	height: 630,
