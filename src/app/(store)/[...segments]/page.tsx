@@ -37,12 +37,13 @@ export function generateStaticParams() {
 }
 
 interface PageProps {
-	params: {
+	params: Promise<{
 		segments: string[];
-	};
+	}>;
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page(props: PageProps) {
+	const params = await props.params;
 	if (!params.segments) {
 		return notFound();
 	}
